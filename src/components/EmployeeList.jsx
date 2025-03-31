@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchEmployees } from "../redux/employeeSlice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const BASE_URL = import.meta.env.VITE_BASE_URL 
+import DataTable from "react-data-table-component";
+import { FaEdit, FaTrashAlt } from "react-icons/fa"; 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const EmployeeList = () => {
   const dispatch = useDispatch();
@@ -41,7 +43,7 @@ const EmployeeList = () => {
           },
         });
 
-        dispatch(fetchEmployees()); 
+        dispatch(fetchEmployees());
         alert("Employee deleted successfully!");
         navigate("/");
       } catch (error) {
@@ -53,77 +55,107 @@ const EmployeeList = () => {
     }
   };
 
-  return (
-    <div style={{ padding: "20px" }}>
-      <h2>Employee List</h2>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(5, 1fr)",
-          gap: "20px",
-          gridAutoRows: "minmax(200px, auto)",
-        }}
-      >
-        {employees.map((emp) => (
-          <div
-            key={emp._id}
+  const columns = [
+    {
+      name: "Profile",
+      selector: (row) => (
+        <img
+          src={row.profilePic}
+          alt="Profile"
+          style={{
+            width: "50px",
+            height: "50px",
+            borderRadius: "50%",
+          }}
+        />
+      ),
+      grow: 0.5,
+    },
+    {
+      name: "Name",
+      selector: (row) => row.name,
+      sortable: true,
+    },
+    {
+      name: "Position",
+      selector: (row) => row.position,
+      sortable: true,
+    },
+    {
+      name: "Contact",
+      selector: (row) => row.contact,
+      sortable: true,
+    },
+    {
+      name: "Actions",
+      cell: (row) => (
+        <div>
+          <button
+            onClick={() => handleEdit(row._id)}
             style={{
-              border: "1px solid #ccc",
-              padding: "15px",
-              borderRadius: "5px",
-              textAlign: "center",
-              boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+              backgroundColor: "#4CAF50",
+              color: "white",
+              padding: "5px 10px",
+              border: "none",
+              borderRadius: "3px",
+              cursor: "pointer",
+              margin: "5px",
             }}
           >
-            {emp.profilePic && (
-              <img
-                src={emp.profilePic}
-                alt="Profile"
-                style={{
-                  width: "80px",
-                  height: "80px",
-                  borderRadius: "50%",
-                  marginBottom: "10px",
-                }}
-              />
-            )}
-            <h3>{emp.name}</h3>
-            <p>Position: {emp.position}</p>
-            <p>Contact: {emp.contact}</p>
+            <FaEdit/>
+          </button>
+          <button
+            onClick={() => handleDelete(row._id)}
+            style={{
+              backgroundColor: "#f44336",
+              color: "white",
+              padding: "5px 10px",
+              border: "none",
+              borderRadius: "3px",
+              cursor: "pointer",
+              margin: "5px",
+            }}
+          >
+            <FaTrashAlt />
+          </button>
+        </div>
+      ),
+      grow: 1,
+    },
+  ];
 
-            <div>
-              <button
-                onClick={() => handleEdit(emp._id)}
-                style={{
-                  backgroundColor: "#4CAF50",
-                  color: "white",
-                  padding: "5px 10px",
-                  border: "none",
-                  borderRadius: "3px",
-                  cursor: "pointer",
-                  margin: "5px",
-                }}
-              >
-                Edit
-              </button>
-              <button
-                onClick={() => handleDelete(emp._id)}
-                style={{
-                  backgroundColor: "#f44336",
-                  color: "white",
-                  padding: "5px 10px",
-                  border: "none",
-                  borderRadius: "3px",
-                  cursor: "pointer",
-                  margin: "5px",
-                }}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+  return (
+    <div style={{ padding: "50px" }}>
+      <h2 style={{ color: "#4B0082" }}>Employee List</h2>
+      <DataTable
+        columns={columns}
+        data={employees}
+        noHeader
+        pagination
+        highlightOnHover
+        customStyles={{
+          headRow: {
+            style: {
+              backgroundColor: "#D8BFD8",
+              color: "#4B0082",
+            },
+          },
+          headCells: {
+            style: {
+              padding: "10px",
+              borderBottom: "1px solid #ddd",
+              fontSize:"16px",
+              fontWeight: "bold",
+            },
+          },
+          cells: {
+            style: {
+              padding: "10px",
+              borderBottom: "1px solid #ddd",
+            },
+          },
+        }}
+      />
     </div>
   );
 };

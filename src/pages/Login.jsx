@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-const BASE_URL = import.meta.env.VITE_BASE_URL 
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Login = () => {
-  const [credentials, setCredentials] = useState({ username: "", password: "" });
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+  });
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -99,25 +103,24 @@ const Login = () => {
 
         <button
           type="submit"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
           style={{
             width: "100%",
             padding: "14px",
-            background: "#007bff",
-            color: "white",
+            background: isHovered ? "#4B0082" : "#D8BFD8", 
+            color: isHovered ? "#D8BFD8" : "#4B0082", 
             border: "none",
-            borderRadius: "8px",
+            borderRadius: "4px",
             cursor: "pointer",
             fontSize: "18px",
             fontWeight: "600",
             transition: "0.3s ease",
             boxSizing: "border-box",
           }}
-          onMouseOver={(e) => (e.target.style.background = "#5a7bfa")}
-          onMouseOut={(e) => (e.target.style.background = "#6e8efb")}
         >
           Login
         </button>
-
       </form>
     </div>
   );
