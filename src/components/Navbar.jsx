@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {FaSignOutAlt} from "react-icons/fa"; // Importing the sign-out icon from react-icons
+import {FaSignOutAlt} from "react-icons/fa"; 
 
 const Navbar = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
