@@ -3,9 +3,10 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
+    username: "abhinavanand3154@gmail.com",
+    password: "Abhi@123",
   });
+  
   const [isHovered, setIsHovered] = useState(false);
 
   const handleChange = (e) => {
@@ -63,43 +64,47 @@ const Login = () => {
           Login
         </h2>
 
+        
         <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          onChange={handleChange}
-          required
-          style={{
-            width: "100%",
-            padding: "14px",
-            margin: "12px 0",
-            borderRadius: "8px",
-            border: "2px solid #ddd",
-            fontSize: "16px",
-            outline: "none",
-            transition: "0.3s ease",
-            boxSizing: "border-box",
-          }}
-        />
+  type="text"
+  name="username"
+  placeholder="Username"
+  value={credentials.username}
+  onChange={handleChange}
+  required
+  style={{
+    width: "100%",
+    padding: "14px",
+    margin: "12px 0",
+    borderRadius: "8px",
+    border: "2px solid #ddd",
+    fontSize: "16px",
+    outline: "none",
+    transition: "0.3s ease",
+    boxSizing: "border-box",
+  }}
+/>
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-          required
-          style={{
-            width: "100%",
-            padding: "14px",
-            margin: "12px 0",
-            borderRadius: "8px",
-            border: "2px solid #ddd",
-            fontSize: "16px",
-            outline: "none",
-            transition: "0.3s ease",
-            boxSizing: "border-box",
-          }}
-        />
+<input
+  type="password"
+  name="password"
+  placeholder="Password"
+  value={credentials.password}
+  onChange={handleChange}
+  required
+  style={{
+    width: "100%",
+    padding: "14px",
+    margin: "12px 0",
+    borderRadius: "8px",
+    border: "2px solid #ddd",
+    fontSize: "16px",
+    outline: "none",
+    transition: "0.3s ease",
+    boxSizing: "border-box",
+  }}
+/>
+
 
         <button
           type="submit"
